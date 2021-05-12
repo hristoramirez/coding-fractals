@@ -1,0 +1,64 @@
+# The code below imports the 'turtle' graphics library
+import turtle
+
+# The code below is an example of a black box that calculates the midpoint
+# between p1 and p2
+def getMid(p1,p2):
+    return ((p1[0]+p2[0]) / 2, (p1[1] + p2[1]) / 2) #find midpoint
+
+# this functions creates our Sierpinski Triangle
+def createTriangle(points,depth):
+    # Grab the 3 points that we have inside of points,
+    # which is a list of points. Each point has an x and y component
+    # that looks like [x, y]
+    point0 = points[0]
+    point1 = points[1]
+    point2 = points[2]
+    
+    # The overall structure of our triangle
+    #
+    #       point1
+    #      /      \
+    #     /        \  
+    #  point0 ---- point2
+    #
+
+    # We first have to lift our pen and take it to point0 of our triangle
+    pen.penup()
+    # pen.goto(x, y) takes our pen to the given x and y coordinates
+    # for our example, we can access the coordinates of a point using
+    # point[0] for the x and point[1] for y
+    pen.goto(point0[0], point0[1])
+    pen.pendown()
+    pen.goto(point1[0], point1[1])
+    pen.goto(point2[0], point2[1])
+    pen.goto(point0[0], point0[1])
+
+    if depth>0:
+        createTriangle([points[0], getMid(points[0], points[1]), getMid(points[0], points[2])],
+                  depth-1)
+        createTriangle([points[1], getMid(points[0], points[1]), getMid(points[1], points[2])],
+                   depth-1)
+        createTriangle([points[2], getMid(points[2], points[1]), getMid(points[0], points[2])],
+                   depth-1)
+
+# The code below creates a pen
+pen = turtle.Turtle()
+# The code below determines the pen color
+pen.color("blue") # I used blue but you can try out other colors 
+# The code below determines the pen thickness
+pen.pensize(2) # You can try out other values as well     
+# The code below hides the pen while drawing
+pen.hideturtle() 
+# The code below determines the pen's draw speed
+pen.speed(100) # Try experimenting with other drawing speeds
+
+
+# The below code defines the size of our triangle
+#             point0    point1     point2
+#            x     y     x  y      x    y
+points = [ [-180, -130], [0, 180], [180, -130] ] 
+
+# Calling our `createTriangle` function with our points from line 60 with
+# a depth of 3, try changing the depth value
+createTriangle(points, 3)
