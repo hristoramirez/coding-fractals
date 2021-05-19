@@ -1,0 +1,43 @@
+# The code below imports the 'turtle' graphics library
+import turtle
+
+def createKochSnowflake(pen, iterations, length, factor, angle):
+    """ 
+      1. pen:        The pen variable used to draw the Koch Snowflake
+      2. iterations: Depth of the Koch Snowflake drawn
+      3. length:     The length of the starting edge 
+      4. factor:     Factor by which branches are shortened from level to level
+      5. angle:      Determines the angle from which the new side of the Koch Snowflake emerges
+    """
+    if iterations == 0:
+        pen.forward(length)
+    else:
+        iterations -= 1
+        length *= factor # length *=   length = length * 
+        createKochSnowflake(pen, iterations, length, factor, angle)
+        pen.left(angle)
+        createKochSnowflake(pen, iterations, length, factor, angle)
+        pen.right(angle * 2)
+        createKochSnowflake(pen, iterations, length, factor, angle)
+        pen.left(angle)
+        createKochSnowflake(pen, iterations, length, factor, angle)
+
+# The code below creates a pen
+pen = turtle.Turtle()
+# The code below determines the pen color
+pen.color("red")
+# The code below determines the pen thickness
+pen.pensize(2)     
+# The code below hides the pen while drawing
+pen.hideturtle()
+# The code below determines the pen's draw speed
+pen.speed(146)
+# Move cursor to make sure the fractal fits in the screen
+pen.penup()
+pen.goto(-130,60)
+pen.pendown()
+
+# range = [0, 1, 2]
+for i in range(3):
+    createKochSnowflake(pen, 4, 400, .3, 60)
+    pen.right(120)
